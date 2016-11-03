@@ -6,10 +6,10 @@ plugins {
 gobind {
     /* The Go package path; must be under one of the GOPATH elements or
      a relative to the current directory (e.g. ../../hello) */
-    pkg = "github.com/pebbe/textcat/taalrader"
+    pkg = "taalrader"
 
     /* GOPATH where the Go package is; check `go env` */
-    // GOPATH = "/YOUR/GOPATH"
+    GOPATH = "/home/peter/Studio/Taalrader/go:/home/peter/go"
 
     /* Absolute path to the go binary */
     // GO = "/PATH/TO/GO"
