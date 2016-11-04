@@ -22,7 +22,7 @@
         android:layout_marginLeft="16dp"
         android:hint="@string/WriteText"
         android:fontFamily="serif"
-        android:gravity="top|left"
+        android:gravity="top|start"
         android:maxLength="1000"
         android:layout_marginTop="16dp"
         app:layout_constraintBottom_toTopOf="@+id/button"

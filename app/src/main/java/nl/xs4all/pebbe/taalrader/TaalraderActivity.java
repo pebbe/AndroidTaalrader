@@ -1,5 +1,12 @@
 package nl.xs4all.pebbe.taalrader;
 
+// TODO: info -> popup
+// TODO: knoppen moeten zichtbaar blijven als toestenbord wordt geopend
+// TODO: styles
+// TODO: launch icon
+// TODO: Go omzetten naar Java
+// TODO: publiceren op google play
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -29,6 +36,20 @@ public class TaalraderActivity extends AppCompatActivity {
             doText();
         }
     };
+
+    public void raadtaal(View v) {
+        doText();
+    }
+
+    private void doText() {
+        EditText ev = (EditText) findViewById(R.id.myText);
+        String text = ev.getText().toString();
+        String taal = Taalrader.raadtaal(text);
+        taal = taal.replace("\n", " ").replace(".utf8", "");
+        TextView tv = (TextView) findViewById(R.id.taal);
+        tv.setText(taal);
+        // TODO: weergave van taal kan mooier
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,20 +121,6 @@ public class TaalraderActivity extends AppCompatActivity {
         ev.setText("");
         TextView tv = (TextView) findViewById(R.id.taal);
         tv.setText("");
-    }
-
-    public void raadtaal(View v) {
-        doText();
-    }
-
-    private void doText() {
-        EditText ev = (EditText) findViewById(R.id.myText);
-        String text = ev.getText().toString();
-        String taal = Taalrader.raadtaal(text);
-        taal = taal.replace("\n", " ").replace(".utf8", "");
-        TextView tv = (TextView) findViewById(R.id.taal);
-        tv.setText(taal);
-        // TODO
     }
 
 }
