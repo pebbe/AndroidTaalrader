@@ -29,10 +29,16 @@ public class TaalraderActivity extends AppCompatActivity {
         @Override
         public void handleMessage(Message msg) {
             Bundle bundle = msg.getData();
+            String error = bundle.getString("error");
             String webtext = bundle.getString("webtext");
             EditText v = (EditText) findViewById(R.id.myText);
             v.setText(webtext);
-            doText();
+            if (error == "") {
+                doText();
+            } else {
+                TextView tv = (TextView) findViewById(R.id.taal);
+                tv.setText(error);
+            }
         }
     };
 
@@ -81,14 +87,16 @@ public class TaalraderActivity extends AppCompatActivity {
         Runnable runnable = new Runnable() {
             public void run() {
                 String webtext = "";
+                String error = "";
                 try {
                     Document doc = Jsoup.connect(text).get();
                     webtext = doc.body().text();
                 } catch (Exception e) {
-                    webtext = "Error:\n" + e.toString();
+                    error = e.toString();
                 }
                 Message msg = handler.obtainMessage();
                 Bundle bundle = new Bundle();
+                bundle.putString("error", error);
                 bundle.putString("webtext", webtext);
                 msg.setData(bundle);
                 handler.sendMessage(msg);
@@ -97,9 +105,11 @@ public class TaalraderActivity extends AppCompatActivity {
 
         EditText v = (EditText) findViewById(R.id.myText);
         if (text.startsWith("http://") || text.startsWith("https://")) {
+            TextView tv = (TextView) findViewById(R.id.taal);
+            tv.setText(R.string.loading);
+            v.setText(" ");
             Thread myThread = new Thread(runnable);
             myThread.start();
-            v.setText(getText(R.string.loading).toString() + "\n\n" + text);
         } else {
             v.setText(text);
             doText();
