@@ -5,8 +5,9 @@
     <string name="raadtaal">Guess language</string>
     <string name="loading">Loading...</string>
     <string name="clear">Clear</string>
-    <string name="SHORT">text too short</string>
-    <string name="UNKNOWN">unknown</string>
+    <string name="OK">OK</string>
+    <string name="SHORT">Text too short</string>
+    <string name="UNKNOWN">Language not recognized</string>
     <string name="af">Afrikaans</string>
     <string name="ar">Arabic</string>
     <string name="bg">Bulgarian</string>
@@ -66,4 +67,15 @@
     <string name="yi">Yiddish</string>
     <string name="yo">Yoruba</string>
     <string name="zh">Chinese</string>
+    <string name="info">LanguageGuesser nows about these languages:[BR][BR]Afrikaans,
+        Albanian, Arabic, Basque, Bulgarian, Catalan, Chinese,
+        Croatian, Czech, Danish, Dutch, English, Esperanto, Estonian, Finnish,
+        French, German, Greek, Hebrew, Hindi, Hungarian, Icelandic, Indonesian,
+        Interlingua, Irish, Italian, Japanese, Kazakh, Korean, Latin, Latvian,
+        Lithuanian, Luxembourgish, Macedonian, Malay, Norwegian, Persian
+        (Farsi), Polish, Portuguese, Romanian, Russian, Scottish Gaelic,
+        Serbian, Slovak, Slovene, Spanish, Swahili, Swedish, Tagalog, Tamil,
+        Turkish, Ukrainian, Urdu, Vietnamese, Volapük, Welsh, Western Frisian,
+        Yiddish, Yoruba
+    </string>
 </resources>

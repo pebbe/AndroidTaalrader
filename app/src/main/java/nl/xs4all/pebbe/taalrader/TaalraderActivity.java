@@ -1,6 +1,5 @@
 package nl.xs4all.pebbe.taalrader;
 
-// TODO: info -> popup
 // TODO: styles
 // TODO: launch icon
 // TODO: Go omzetten naar Java
@@ -10,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -99,7 +99,7 @@ public class TaalraderActivity extends AppCompatActivity {
         if (text.startsWith("http://") || text.startsWith("https://")) {
             Thread myThread = new Thread(runnable);
             myThread.start();
-            v.setText(R.string.loading + text);
+            v.setText(getText(R.string.loading).toString() + "\n\n" + text);
         } else {
             v.setText(text);
             doText();
@@ -123,6 +123,8 @@ public class TaalraderActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_info) {
+            InfoDialogFragment dialog = new InfoDialogFragment();
+            dialog.show(getSupportFragmentManager(), "InfoDialogFragment");
             return true;
         }
 

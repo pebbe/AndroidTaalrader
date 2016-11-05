@@ -4,9 +4,10 @@
     <string name="WriteText">Type een tekst...</string>
     <string name="raadtaal">Raad de taal</string>
     <string name="clear">Wissen</string>
+    <string name="OK">OK</string>
     <string name="loading">Aan het laden...</string>
-    <string name="SHORT">te weinig tekst</string>
-    <string name="UNKNOWN">onbekend</string>
+    <string name="SHORT">Te weinig tekst</string>
+    <string name="UNKNOWN">Taal niet herkend</string>
     <string name="af">Afrikaans</string>
     <string name="ar">Arabisch</string>
     <string name="bg">Bulgaars</string>
@@ -66,4 +67,14 @@
     <string name="yi">Jiddisch</string>
     <string name="yo">Yoruba</string>
     <string name="zh">Chinees</string>
+    <string name="info">De Taalrader kent deze talen:[BR][BR]Afrikaans,
+        Albanees, Arabisch, Baskisch, Bulgaars, Catalaans, Chinees,
+        Deens, Duits, Engels, Esperanto, Estisch, Fins, Frans, Fries, Grieks,
+        Hebreeuws, Hindi, Hongaars, IJslands, Iers, Indonesisch, Interlingua,
+        Italiaans, Japans, Jiddisch, Kazachs, Koreaans, Kroatisch, Latijn, Lets,
+        Litouws, Luxemburgs, Macedonisch, Maleis, Nederlands, Noors, Oekraïens,
+        Perzisch (Farsi), Pools, Portugees, Roemeens, Russisch, Schots-Gaelisch,
+        Servisch, Sloveens, Slowaaks, Spaans, Swahili, Tagalog, Tamil,
+        Tsjechisch, Turks, Urdu, Vietnamees, Volapük, Welsh, Yoruba, Zweeds
+    </string>
 </resources>
