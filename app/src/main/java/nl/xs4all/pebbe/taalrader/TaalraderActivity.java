@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -21,9 +20,12 @@ import android.widget.TextView;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-import go.taalrader.Taalrader;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class TaalraderActivity extends AppCompatActivity {
+
+    private Textcat textcat;
 
     Handler handler = new Handler() {
         @Override
@@ -49,8 +51,7 @@ public class TaalraderActivity extends AppCompatActivity {
     private void doText() {
         EditText ev = (EditText) findViewById(R.id.myText);
         String text = ev.getText().toString();
-        String taal = Taalrader.raadtaal(text);
-        String[] langs = taal.replace(".utf8", "").split("\n");
+        String[] langs = textcat.classify(text);
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < langs.length; i++) {
             if (i > 0) {
@@ -58,7 +59,7 @@ public class TaalraderActivity extends AppCompatActivity {
             }
             builder.append(codeToLang(langs[i]));
         }
-        taal = builder.toString();
+        String taal = builder.toString();
         TextView tv = (TextView) findViewById(R.id.taal);
         tv.setText(taal);
     }
@@ -76,6 +77,15 @@ public class TaalraderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_taalrader);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        InputStream file = getResources().openRawResource(R.raw.data);
+        textcat = new Textcat(file);
+        try {
+            file.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        textcat.setMinDocSize(10);
 
         Bundle extras = getIntent().getExtras();
         if (extras == null) {
