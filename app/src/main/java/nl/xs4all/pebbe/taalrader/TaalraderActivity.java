@@ -2,7 +2,6 @@ package nl.xs4all.pebbe.taalrader;
 
 // TODO: styles
 // TODO: launch icon
-// TODO: Go omzetten naar Java
 // TODO: publiceren op google play
 
 import android.content.Intent;
@@ -26,6 +25,8 @@ import java.io.InputStream;
 public class TaalraderActivity extends AppCompatActivity {
 
     private Textcat textcat;
+    private EditText editText;
+    private TextView textView;
 
     Handler handler = new Handler() {
         @Override
@@ -33,13 +34,11 @@ public class TaalraderActivity extends AppCompatActivity {
             Bundle bundle = msg.getData();
             String error = bundle.getString("error");
             String webtext = bundle.getString("webtext");
-            EditText v = (EditText) findViewById(R.id.myText);
-            v.setText(webtext);
-            if (error == "") {
+            editText.setText(webtext);
+            if (error == null || error.equals("")) {
                 doText();
             } else {
-                TextView tv = (TextView) findViewById(R.id.taal);
-                tv.setText(error);
+                textView.setText(error);
             }
         }
     };
@@ -49,8 +48,7 @@ public class TaalraderActivity extends AppCompatActivity {
     }
 
     private void doText() {
-        EditText ev = (EditText) findViewById(R.id.myText);
-        String text = ev.getText().toString();
+        String text = editText.getText().toString();
         String[] langs = textcat.classify(text);
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < langs.length; i++) {
@@ -60,15 +58,12 @@ public class TaalraderActivity extends AppCompatActivity {
             builder.append(codeToLang(langs[i]));
         }
         String taal = builder.toString();
-        TextView tv = (TextView) findViewById(R.id.taal);
-        tv.setText(taal);
+        textView.setText(taal);
     }
 
     public void clear(View v) {
-        EditText ev = (EditText) findViewById(R.id.myText);
-        ev.setText("");
-        TextView tv = (TextView) findViewById(R.id.taal);
-        tv.setText("");
+        editText.setText("");
+        textView.setText("");
     }
 
     @Override
@@ -77,6 +72,9 @@ public class TaalraderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_taalrader);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        editText = (EditText) findViewById(R.id.myText);
+        textView = (TextView) findViewById(R.id.taal);
 
         InputStream file = getResources().openRawResource(R.raw.data);
         textcat = new Textcat(file);
@@ -100,7 +98,7 @@ public class TaalraderActivity extends AppCompatActivity {
                 String error = "";
                 try {
                     Document doc = Jsoup.connect(text).get();
-                    webtext = doc.body().text();
+                    webtext = doc.body().text().replaceAll("\\bhttps?://\\S*", " ");
                 } catch (Exception e) {
                     error = e.toString();
                 }
@@ -113,15 +111,13 @@ public class TaalraderActivity extends AppCompatActivity {
             }
         };
 
-        EditText v = (EditText) findViewById(R.id.myText);
         if (text.startsWith("http://") || text.startsWith("https://")) {
-            TextView tv = (TextView) findViewById(R.id.taal);
-            tv.setText(R.string.loading);
-            v.setText(" ");
+            textView.setText(R.string.loading);
+            editText.setText(" ");
             Thread myThread = new Thread(runnable);
             myThread.start();
         } else {
-            v.setText(text);
+            editText.setText(text.replaceAll("\\bhttps?://\\S*", " "));
             doText();
         }
 
