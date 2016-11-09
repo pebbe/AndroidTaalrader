@@ -90,6 +90,16 @@ public class TaalraderActivity extends AppCompatActivity {
             return;
         }
 
+        // text from intent, so make scrolling easier
+        editText.setFocusable(false);
+        editText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editText.setFocusableInTouchMode(true);
+                editText.requestFocus();
+            }
+        });
+
         final String text = getIntent().getStringExtra(Intent.EXTRA_TEXT);
 
         Runnable runnable = new Runnable() {
@@ -140,7 +150,7 @@ public class TaalraderActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_info) {
             InfoDialogFragment dialog = new InfoDialogFragment();
-            dialog.show(getSupportFragmentManager(), "InfoDialogFragment");
+            dialog.show(getSupportFragmentManager(), "InfoDiaFrag");
             return true;
         }
 
