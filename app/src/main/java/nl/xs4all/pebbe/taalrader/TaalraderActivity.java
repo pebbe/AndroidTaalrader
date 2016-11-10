@@ -19,12 +19,13 @@ import android.widget.TextView;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 public class TaalraderActivity extends AppCompatActivity {
 
-    private Textcat textcat;
+    private static Textcat textcat;
+    private static String textcatError;
+
     private EditText editText;
     private TextView textView;
 
@@ -48,6 +49,10 @@ public class TaalraderActivity extends AppCompatActivity {
     }
 
     private void doText() {
+        if (textcat == null) {
+            textView.setText(textcatError);
+            return;
+        }
         String text = editText.getText().toString();
         String[] langs = textcat.classify(text);
         StringBuilder builder = new StringBuilder();
@@ -67,6 +72,16 @@ public class TaalraderActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        CharSequence input = editText.getText();
+        CharSequence taal = textView.getText();
+        outState.putCharSequence("input", input);
+        outState.putCharSequence("taal", taal);
+        outState.putInt("saved", 1);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_taalrader);
@@ -76,17 +91,28 @@ public class TaalraderActivity extends AppCompatActivity {
         editText = (EditText) findViewById(R.id.myText);
         textView = (TextView) findViewById(R.id.taal);
 
-        InputStream file = getResources().openRawResource(R.raw.data);
-        textcat = new Textcat(file);
-        try {
-            file.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (textcat == null) {
+            try {
+                InputStream file = getResources().openRawResource(R.raw.data);
+                textcat = new Textcat(file);
+                file.close();
+                textcat.setMinDocSize(10);
+            } catch (Exception e) {
+                textcatError = editText.toString();
+                textcat = null;
+            }
         }
-        textcat.setMinDocSize(10);
 
-        Bundle extras = getIntent().getExtras();
-        if (extras == null) {
+        if (savedInstanceState != null) {
+            if (savedInstanceState.getInt("saved", 0) != 0) {
+                editText.setText(savedInstanceState.getCharSequence("input"));
+                textView.setText(savedInstanceState.getCharSequence("taal"));
+                return;
+            }
+        }
+
+        String t = getIntent().getStringExtra(Intent.EXTRA_TEXT);
+        if (t == null) {
             return;
         }
 
@@ -100,7 +126,7 @@ public class TaalraderActivity extends AppCompatActivity {
             }
         });
 
-        final String text = getIntent().getStringExtra(Intent.EXTRA_TEXT);
+        final String text = t;
 
         Runnable runnable = new Runnable() {
             public void run() {
