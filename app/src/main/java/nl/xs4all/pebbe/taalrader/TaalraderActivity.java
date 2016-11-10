@@ -1,9 +1,5 @@
 package nl.xs4all.pebbe.taalrader;
 
-// TODO: styles
-// TODO: launch icon
-// TODO: publiceren op google play
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -102,7 +98,7 @@ public class TaalraderActivity extends AppCompatActivity {
                 file.close();
                 textcat.setMinDocSize(10);
             } catch (Exception e) {
-                textcatError = editText.toString();
+                textcatError = e.toString();
                 textcat = null;
             }
         }
