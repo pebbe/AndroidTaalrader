@@ -21,8 +21,8 @@ import java.io.InputStream;
 
 public class TaalraderActivity extends AppCompatActivity {
 
-    private static Textcat textcat;
-    private static String textcatError;
+    private static Textcat textcat = null;
+    private static String textcatError = "";
 
     private EditText editText;
     private TextView textView;
